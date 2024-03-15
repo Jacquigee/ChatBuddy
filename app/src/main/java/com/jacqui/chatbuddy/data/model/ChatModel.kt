@@ -1,6 +1,4 @@
-package com.jacqui.chatbuddy.model
-
-import java.util.UUID
+package com.jacqui.chatbuddy.data.model
 
 /**
  * PROJECT NAME: Chat Buddy
@@ -11,12 +9,10 @@ import java.util.UUID
  */
 
 enum class Participant {
-    USER, MODEL, ERROR
+    USER, MODEL
 }
 
 data class ChatModel(
-    val id: String = UUID.randomUUID().toString(),
-    val text: String = "",
+    val prompt: String = "",
     val participant: Participant = Participant.USER,
-    var isPending: Boolean = true
 )

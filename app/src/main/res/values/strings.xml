@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Chat Buddy</string>
+    <string name="chat_label">Enter your chat here</string>
+    <string name="action_send">Send\n</string>
 </resources>
