@@ -1,9 +1,4 @@
 # ChatBuddy
-
-[![Releases](https://img.shields.io/github/release/bizyback/rhyme.svg?style=for-the-badge&color=orange)](https://github.com/bizyback/rhyme/releases)
-[![Kotlin](https://img.shields.io/github/languages/top/bizyback/rhyme.svg?style=for-the-badge&color=orange)](https://kotlinlang.org/)
-[![License](https://img.shields.io/github/license/bizyback/rhyme.svg?style=for-the-badge&color=orange)](https://github.com/bizyback/rhyme/blob/main/LICENSE)
-
 ChatBuddy is a simple chat application that implements the Gemini AI which responds to prompts from a user.
 
 ## 📸 Screenshot
