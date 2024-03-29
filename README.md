@@ -10,7 +10,7 @@ ChatBuddy is a simple chat application that implements the Gemini AI which respo
 
 |                            Titles(iOS)                            |  
   |:-----------------------------------------------------------------:|
-| <img alt="poems" src="/home/jacqui/Pictures/chats.jpg"/> | 
+| <img alt="poems" src="/home/jacqui/AndroidStudioProjects/ChatBuddy/.github/images/chats.jpg"/> | 
 
 ## ⚡️ Features
 - [X] Get responses from the Gemini Model
