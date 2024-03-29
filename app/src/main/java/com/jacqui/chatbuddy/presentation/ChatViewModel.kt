@@ -15,14 +15,14 @@ import kotlinx.coroutines.launch
 
 data class ChatUiState(
     val prompt: String = "",
-    val messages: UiListState<ChatModel> = UiListState.Idle,
+    val messages: UiState<ChatModel> = UiState.Idle,
     val chats: List<ChatModel> = emptyList()
 ) {
     val isActionEnabled: Boolean
-        get() = prompt.isNotBlank() and (messages !is UiListState.Loading)
+        get() = prompt.isNotBlank() and (messages !is UiState.Loading)
 
     val isPromptEnabled: Boolean
-        get() = messages !is UiListState.Loading
+        get() = messages !is UiState.Loading
 }
 
 class ChatViewModel : StateViewModel<ChatUiState>(ChatUiState()) {
@@ -41,7 +41,7 @@ class ChatViewModel : StateViewModel<ChatUiState>(ChatUiState()) {
 
         viewModelScope.launch {
             val result = GeminiApiImplementation.getPrompt(prompt = state.value.prompt)
-            update { copy(messages = UiListState.Success(data = result)) }
+            update { copy(messages = UiState.Success(data = result)) }
             addChat(result)
         }
     }

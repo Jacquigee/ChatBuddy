@@ -6,15 +6,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
-sealed interface UiListState<out T> {
+sealed interface UiState<out T> {
 
-    data class Error(val message: String) : UiListState<Nothing>
+    data class Error(val message: String) : UiState<Nothing>
 
-    data class Success<T>(val data: T) : UiListState<T>
+    data class Success<T>(val data: T) : UiState<T>
 
-    data object Loading : UiListState<Nothing>
+    data object Loading : UiState<Nothing>
 
-    data object Idle : UiListState<Nothing>
+    data object Idle : UiState<Nothing>
 
 }
 open class StateViewModel<T>(initial: T) : ViewModel() {

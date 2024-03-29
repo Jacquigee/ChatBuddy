@@ -28,7 +28,7 @@ import com.jacqui.chatbuddy.R
 import com.jacqui.chatbuddy.data.model.Participant
 import com.jacqui.chatbuddy.presentation.ChatUiState
 import com.jacqui.chatbuddy.presentation.ChatViewModel
-import com.jacqui.chatbuddy.presentation.UiListState
+import com.jacqui.chatbuddy.presentation.UiState
 import com.jacqui.chatbuddy.presentation.components.ModelChatItem
 import com.jacqui.chatbuddy.presentation.components.UserChatItem
 
@@ -63,7 +63,7 @@ fun ChatScreenContent(
                 targetState = state.messages
             ) { messages ->
                 when (messages) {
-                    is UiListState.Error -> {
+                    is UiState.Error -> {
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,7 +73,7 @@ fun ChatScreenContent(
                         }
                     }
 
-                    UiListState.Idle -> {
+                    UiState.Idle -> {
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,7 +83,7 @@ fun ChatScreenContent(
                         }
                     }
 
-                    UiListState.Loading -> {
+                    UiState.Loading -> {
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,7 +93,7 @@ fun ChatScreenContent(
                         }
                     }
 
-                    is UiListState.Success -> {
+                    is UiState.Success -> {
                         val chat = state.chats
                         if (chat.isEmpty()) {
                             Column(
