@@ -1,23 +1,24 @@
 [versions]
 agp = "8.3.1"
-kotlin = "1.9.0"
+kotlin = "1.9.23"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2024.02.01"
+compose-bom = "2024.04.00"
 
 #Gemini
-generativeai = "0.2.1"
+generativeai = "0.3.0"
 
 #Viewmodel
 lifecycle-viewmodel-compose = "2.7.0"
 
 #coroutine
-coroutine = "1.3.9"
+coroutine = "1.8.0"
 
+secretsPlugin = "2.0.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -47,4 +48,5 @@ kotlinx-coroutines-android = {group = "org.jetbrains.kotlinx", name = "kotlinx-c
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+secretsGradlePlugin = {id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsPlugin"}
 

@@ -79,7 +79,7 @@ fun ChatScreenContent(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(text = "Idle")
+                            Text(text = "Ask me anything")
                         }
                     }
 

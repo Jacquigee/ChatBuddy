@@ -1,5 +1,3 @@
-import java.util.Properties
-
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
@@ -46,7 +44,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -76,7 +74,6 @@ dependencies {
 
     //Gemini client sdk
     implementation(libs.generativeai)
-
     //Coroutine
     implementation(libs.kotlinx.coroutines.android)
 }

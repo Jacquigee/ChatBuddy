@@ -1,5 +1,5 @@
 # ChatBuddy
-ChatBuddy is a simple chat application that implements the Gemini AI which responds to prompts from a user.
+ChatBuddy is a simple chat application that implements the Gemini AI which responds to text prompts from a user.
 
 ## 📸 Screenshot
 

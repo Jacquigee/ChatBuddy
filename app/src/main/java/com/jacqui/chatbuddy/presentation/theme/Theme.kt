@@ -1,4 +1,4 @@
-package com.jacqui.chatbuddy.ui.theme
+package com.jacqui.chatbuddy.presentation.theme
 
 import android.app.Activity
 import android.os.Build

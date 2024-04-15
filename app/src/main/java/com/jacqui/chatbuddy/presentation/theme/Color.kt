@@ -1,4 +1,4 @@
-package com.jacqui.chatbuddy.ui.theme
+package com.jacqui.chatbuddy.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
