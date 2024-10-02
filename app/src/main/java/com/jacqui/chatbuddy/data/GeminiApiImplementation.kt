@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 object GeminiApiImplementation {
 
     //Insert your apiKey here or in the secrets.properties file or local.properties file.
-    private val apiKey = "AIzaSyDiKwQaklQ_tmfrArJ65JACnbcDW6OIFXk"
+    private val apiKey = ""
 
     suspend fun getPrompt(prompt: String): ChatModel {
         val generativeModel = GenerativeModel(

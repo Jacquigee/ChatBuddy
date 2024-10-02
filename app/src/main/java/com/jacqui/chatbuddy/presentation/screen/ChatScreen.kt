@@ -14,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.jacqui.chatbuddy.R
@@ -33,7 +33,7 @@ import com.jacqui.chatbuddy.presentation.components.ModelChatItem
 import com.jacqui.chatbuddy.presentation.components.UserChatItem
 
 @Composable
-fun ChatScreen(viewModel: ChatViewModel) {
+fun ChatScreen(modifier: Modifier, viewModel: ChatViewModel) {
     val state by viewModel.state.collectAsState()
 
     ChatScreenContent(
@@ -49,11 +49,9 @@ fun ChatScreenContent(
     onValueChangePrompt: (String) -> Unit,
     onClickSubmit: () -> Unit
 ) {
-
-    Scaffold() {
         Column(
             modifier = Modifier
-                .padding(it)
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
             AnimatedContent(
@@ -131,7 +129,7 @@ fun ChatScreenContent(
                     onValueChange = onValueChangePrompt,
                     placeholder = { Text(text = "Type your prompt") },
                     keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences,
+                        capitalization = KeyboardCapitalization.Sentences
                     )
                 )
                 IconButton(
@@ -149,5 +147,4 @@ fun ChatScreenContent(
             }
 
         }
-    }
 }
