@@ -1,5 +1,6 @@
 package com.jacqui.chatbuddy.presentation.screen
 
+import android.R.attr.prompt
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
