@@ -21,9 +21,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jacqui.chatbuddy.R
 import com.jacqui.chatbuddy.data.model.Participant
 import com.jacqui.chatbuddy.presentation.ChatUiState
@@ -33,8 +35,9 @@ import com.jacqui.chatbuddy.presentation.components.ModelChatItem
 import com.jacqui.chatbuddy.presentation.components.UserChatItem
 
 @Composable
-fun ChatScreen(modifier: Modifier, viewModel: ChatViewModel) {
-    val state by viewModel.state.collectAsState()
+fun ChatScreen(modifier: Modifier) {
+    val viewModel: ChatViewModel = viewModel()
+    val state by viewModel.chatUiState.collectAsState()
 
     ChatScreenContent(
         state = state,
@@ -49,102 +52,115 @@ fun ChatScreenContent(
     onValueChangePrompt: (String) -> Unit,
     onClickSubmit: () -> Unit
 ) {
-        Column(
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        AnimatedContent(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-        ) {
-            AnimatedContent(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                targetState = state.messages
-            ) { messages ->
-                when (messages) {
-                    is UiState.Error -> {
+                .fillMaxWidth()
+                .weight(1f),
+            targetState = state.messages
+        ) { messages ->
+            when (messages) {
+                is UiState.Error -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(text = messages.message)
+                    }
+                }
+
+                UiState.Idle -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(text = "Ask me anything")
+                    }
+                }
+
+                UiState.Loading -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is UiState.Success -> {
+                    val chat = state.chats
+                    if (chat.isEmpty()) {
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(text = messages.message)
+                            Text(text = "Empty")
                         }
-                    }
-
-                    UiState.Idle -> {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(text = "Ask me anything")
-                        }
-                    }
-
-                    UiState.Loading -> {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
-
-                    is UiState.Success -> {
-                        val chat = state.chats
-                        if (chat.isEmpty()) {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Text(text = "Empty")
-                            }
-                        } else {
-                            LazyColumn {
-                                items(chat) {
-                                    when (it.participant) {
-                                        Participant.USER -> UserChatItem(prompt = it.prompt)
-                                        Participant.MODEL -> ModelChatItem(response = it.prompt)
-                                    }
-
+                    } else {
+                        LazyColumn {
+                            items(chat) {
+                                when (it.participant) {
+                                    Participant.USER -> UserChatItem(prompt = it.prompt)
+                                    Participant.MODEL -> ModelChatItem(response = it.prompt)
                                 }
+
                             }
                         }
-
                     }
+
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp, end = 4.dp, bottom = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier.weight(1f),
-                    value = state.prompt,
-                    enabled = state.isPromptEnabled,
-                    onValueChange = onValueChangePrompt,
-                    placeholder = { Text(text = "Type your prompt") },
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences
-                    )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                modifier = Modifier.weight(1f),
+                value = state.prompt,
+                enabled = state.isPromptEnabled,
+                onValueChange = onValueChangePrompt,
+                placeholder = { Text(text = "Type your prompt") },
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences
                 )
-                IconButton(
-                    onClick = onClickSubmit,
-                    enabled = state.isActionEnabled
-                ) {
-                    Icon(
-                        modifier = Modifier,
-                        painter = painterResource(id = R.drawable.send),
-                        contentDescription = "Send button"
-                    )
-                }
-
-
+            )
+            IconButton(
+                onClick = onClickSubmit,
+                enabled = state.isActionEnabled
+            ) {
+                Icon(
+                    modifier = Modifier,
+                    painter = painterResource(id = R.drawable.send),
+                    contentDescription = "Send button"
+                )
             }
+
 
         }
+
+    }
+}
+
+@Preview
+@Composable
+private fun ChatScreenContentPreview(
+    @PreviewParameter(ChatPreviewParameterProvider::class)
+    state: ChatUiState
+) {
+    ChatScreenContent(
+        state = state,
+        onValueChangePrompt = {},
+        onClickSubmit = {}
+    )
 }

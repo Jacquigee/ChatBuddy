@@ -8,10 +8,6 @@ package com.jacqui.chatbuddy.data.model
  * TIME        : 8:57 PM
  */
 
-enum class Participant {
-    USER, MODEL
-}
-
 data class ChatModel(
     val prompt: String = "",
     val participant: Participant = Participant.USER,
