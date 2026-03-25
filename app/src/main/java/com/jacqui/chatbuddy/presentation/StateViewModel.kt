@@ -17,20 +17,3 @@ sealed interface UiState<out T> {
     data object Idle : UiState<Nothing>
 
 }
-open class StateViewModel<T>(initial: T) : ViewModel() {
-
-    private val _state = MutableStateFlow(initial)
-    val state get() = _state.asStateFlow()
-
-    fun update(value: T) {
-        _state.update {
-            value
-        }
-    }
-
-    fun update(block: T.() -> T) {
-        update(state.value.block())
-    }
-
-
-}
