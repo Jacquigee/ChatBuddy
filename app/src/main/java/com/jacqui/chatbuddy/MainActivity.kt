@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .padding(paddingValues)
                                 .fillMaxSize(),
-                            viewModel = viewModel
                         )
                     }
                 )

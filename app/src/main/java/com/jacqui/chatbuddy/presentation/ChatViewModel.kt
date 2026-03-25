@@ -1,8 +1,12 @@
 package com.jacqui.chatbuddy.presentation
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jacqui.chatbuddy.data.GeminiApiImplementation
 import com.jacqui.chatbuddy.data.model.ChatModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -25,9 +29,13 @@ data class ChatUiState(
         get() = messages !is UiState.Loading
 }
 
-class ChatViewModel : StateViewModel<ChatUiState>(ChatUiState()) {
+class ChatViewModel : ViewModel() {
+    private val _chatUiState = MutableStateFlow(ChatUiState())
+    val chatUiState = _chatUiState.asStateFlow()
+
+
     fun onValueChangePrompt(value: String) {
-        update { copy(prompt = value)}
+        _chatUiState.update { it.copy(prompt = value) }
     }
 
     fun onClickSubmit() {
@@ -36,20 +44,20 @@ class ChatViewModel : StateViewModel<ChatUiState>(ChatUiState()) {
     }
 
     private fun sendPrompt() {
-        val prompt = state.value.prompt
+        val prompt = _chatUiState.value.prompt
         addChat(ChatModel(prompt = prompt))
 
         viewModelScope.launch {
-            val result = GeminiApiImplementation.getPrompt(prompt = state.value.prompt)
-            update { copy(messages = UiState.Success(data = result)) }
+            val result = GeminiApiImplementation.getPrompt(prompt = _chatUiState.value.prompt)
+            _chatUiState.update { it.copy(messages = UiState.Success(data = result)) }
             addChat(result)
         }
     }
 
     private fun addChat(model: ChatModel) {
-        val chats = state.value.chats.toMutableList()
+        val chats = _chatUiState.value.chats.toMutableList()
         chats.add(model)
-        update { copy(chats = chats) }
+        _chatUiState.update { it.copy(chats = chats) }
     }
 
 }

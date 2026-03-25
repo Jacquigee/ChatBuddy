@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jacqui.chatbuddy.R
 import com.jacqui.chatbuddy.data.model.Participant
 import com.jacqui.chatbuddy.presentation.ChatUiState
@@ -33,8 +34,9 @@ import com.jacqui.chatbuddy.presentation.components.ModelChatItem
 import com.jacqui.chatbuddy.presentation.components.UserChatItem
 
 @Composable
-fun ChatScreen(modifier: Modifier, viewModel: ChatViewModel) {
-    val state by viewModel.state.collectAsState()
+fun ChatScreen(modifier: Modifier) {
+    val viewModel: ChatViewModel = viewModel()
+    val state by viewModel.chatUiState.collectAsState()
 
     ChatScreenContent(
         state = state,
